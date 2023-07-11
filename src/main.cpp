@@ -10,7 +10,7 @@
 
 int main()
 {
-    sf::RenderWindow window(sf::VideoMode(WIDTH, HEIGHT), "CMake SFML Project");
+    sf::RenderWindow window(sf::VideoMode(1080, 720), "CMake SFML Project");
     window.setFramerateLimit(60);
     char newA[10] = "-0.4";
     char newB[10] = "0.6";
@@ -19,8 +19,10 @@ int main()
     char* endPtr2;
     char* endPtr3;
     bool buttonClicked = false;
+    sf::Vector2i previousMousePos;
+    bool isMousePressed = false;
     julia j(-0.4,0.6);
-
+    //j.hightRes();
     // Initialisation d'ImGui-SFML
 
     if (!ImGui::SFML::Init(window)){
@@ -29,13 +31,11 @@ int main()
 
     // Créer une texture SFML
     sf::Texture texture;
-    texture.create(WIDTH, HEIGHT);
 
     // Créer un tableau de pixels pour la texture
-    sf::Uint8* pixels = new sf::Uint8[WIDTH * HEIGHT * 4];
+    sf::Uint8* pixels = new sf::Uint8[j.getWidth() * j.getHeight() * 4];
 
     //j.generateFractal(pixels);
-
     j.threadFractal(pixels);
 
     sf::Clock clock;
@@ -50,10 +50,40 @@ int main()
             {
                 window.close();
             }
+            if (event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left)
+            {
+                isMousePressed = true;
+                previousMousePos = sf::Mouse::getPosition(window);
+            }
+            if (event.type == sf::Event::MouseMoved && isMousePressed)
+            {
+                j.lowRes();
+                sf::Vector2i currentMousePos = sf::Mouse::getPosition(window);
+                sf::Vector2i delta = currentMousePos - previousMousePos;
+
+                // Effectuer le déplacement de la fractale en fonction du mouvement de la souris (delta)
+                // Mettez à jour les paramètres de votre fractale en conséquence
+                std::cout<<"delta:"<<static_cast<double>(delta.x)/200 << " "<<static_cast<double>(delta.y)/200<<std::endl;
+
+                j.setMv(static_cast<double>(delta.x)/300/j.getZoom(),static_cast<double>(delta.y)/300/j.getZoom());
+                j.threadFractal(pixels);
+
+                previousMousePos = currentMousePos;
+                
+            }
+            if (event.type == sf::Event::MouseButtonReleased && event.mouseButton.button == sf::Mouse::Left)
+            {
+                isMousePressed = false;
+                j.hightRes();
+                j.threadFractal(pixels);
+            }
         }
 
         // Générer la fractale
         
+
+
+        texture.create(j.getWidth(), j.getHeight());
 
 
         // Mettre à jour la texture avec les nouveaux pixels
@@ -61,8 +91,15 @@ int main()
 
         window.clear();
 
+        
         // Dessiner la texture sur la fenêtre
         sf::Sprite sprite(texture);
+
+        sf::Vector2u windowSize = window.getSize();
+
+        sprite.setScale(static_cast<float>(windowSize.x) / j.getWidth(),
+                static_cast<float>(windowSize.y) / j.getHeight());
+
         window.draw(sprite);
 
         ImGui::SFML::Update(window, clock.restart());

@@ -2,7 +2,6 @@
 #include <cmath>
 
 
-
 julia::julia(double a, double b):a(a),b(b){
     std::cout<<"julia"<<std::endl;
 }
@@ -48,7 +47,7 @@ void julia::generateFractal(sf::Uint8* pixels, int wStart, int wFinish, int hSta
         y++;
     }
 
-    std::cout << "x = " << x << " y = " << y << std::endl;
+    //std::cout << "x = " << x << " y = " << y << std::endl;
 }
 
 void julia::threadFractal(sf::Uint8* pixels)
@@ -80,6 +79,38 @@ double julia::getA(){
 double julia::getB(){
     return this->b;
 }
+
+int julia::getWidth(){
+    return this->WIDTH;
+}
+
+int julia::getHeight(){
+    return this->HEIGHT;
+}
+
+void julia::lowRes(){
+    this->HEIGHT=720/4;
+    this->WIDTH=1080/4;
+}
+
+void julia::hightRes(){
+    this->HEIGHT=720;
+    this->WIDTH=1080;
+
+    std::cout<<this->HEIGHT<<"x"<<this->WIDTH<<std::endl;
+}
+
+
 void julia::setZoom(double z){
     this->ZOOM=z;
+}
+
+double julia::getZoom(){
+    return this->ZOOM;
+}
+
+void julia::setMv(double x, double y){
+    this->move_x-=x;
+    this->move_y-=y;
+
 }
