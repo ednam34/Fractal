@@ -14,7 +14,7 @@ int main()
     window.setFramerateLimit(60);
     char newA[10] = "-0.4";
     char newB[10] = "0.6";
-    char newZOOM[10];
+    char newZOOM[10] = "0.8";
     char* endPtr;
     char* endPtr2;
     char* endPtr3;
