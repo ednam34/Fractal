@@ -14,6 +14,7 @@ class julia{
         julia(double a, double b);
         void generateFractal(sf::Uint8* pixels, int wStart, int wFinish, int hStart ,int hFinish);
         void threadFractal(sf::Uint8* pixels);
+        void generateFractalWithAntialiasing(sf::Uint8* pixels);
         void setAB(double i , double j);
         void setZoom(double z);
         double getA();
@@ -33,5 +34,6 @@ class julia{
         double ZOOM = 0.8;
         double move_x = 0;
         double move_y = 0;
+        int sampleFactor = 2;
 
 };

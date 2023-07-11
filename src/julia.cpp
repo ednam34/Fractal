@@ -66,7 +66,6 @@ void julia::threadFractal(sf::Uint8* pixels)
 }
 
 
-
 void julia::setAB(double i, double j){
     this->a=i;
     this->b=j;
