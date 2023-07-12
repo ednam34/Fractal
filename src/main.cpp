@@ -2,6 +2,7 @@
 #include <imgui-SFML.h>
 #include <imgui.h>
 #include "hpp/julia.hpp"
+#include "hpp/fractal.hpp"
 #include <string>
 #include <cstring>
 #include <cstdlib>
@@ -39,8 +40,9 @@ int main()
     bool buttonClicked = false;
     sf::Vector2i previousMousePos;
     bool isMousePressed = false;
-    julia j(-0.4,0.6);
-    //j.hightRes();
+    //julia j(-0.4,0.6);
+    Fractal* j = new julia(-0.4, 0.6);
+    //j->hightRes();
     // Initialisation d'ImGui-SFML
 
     if (!ImGui::SFML::Init(window)){
@@ -51,11 +53,12 @@ int main()
     sf::Texture texture;
 
     // Créer un tableau de pixels pour la texture
-    sf::Uint8* pixels = new sf::Uint8[j.getWidth() * j.getHeight() * 4];
+    sf::Uint8* pixels = new sf::Uint8[j->getWidth() * j->getHeight() * 4];
 
 
-    //j.generateFractal(pixels);
-    j.threadFractal(pixels);
+    //j->generateFractal(pixels);
+    //j->threadFractal(pixels);
+    j->threadFractal(pixels);
 
     sf::Clock clock;
     while (window.isOpen())
@@ -76,15 +79,15 @@ int main()
             }
             if (event.type == sf::Event::MouseMoved && isMousePressed)
             {
-                j.lowRes();
+                j->lowRes();
                 sf::Vector2i currentMousePos = sf::Mouse::getPosition(window);
                 sf::Vector2i delta = currentMousePos - previousMousePos;
 
                 // Effectuer le déplacement de la fractale en fonction du mouvement de la souris (delta)
                 // Mettez à jour les paramètres de votre fractale en conséquence
 
-                j.setMv(static_cast<double>(delta.x)/400/j.getZoom(),static_cast<double>(delta.y)/400/j.getZoom());
-                j.threadFractal(pixels);
+                j->setMv(static_cast<double>(delta.x)/400/j->getZoom(),static_cast<double>(delta.y)/400/j->getZoom());
+                j->threadFractal(pixels);
 
                 previousMousePos = currentMousePos;
                 
@@ -92,8 +95,8 @@ int main()
             if (event.type == sf::Event::MouseButtonReleased && event.mouseButton.button == sf::Mouse::Left)
             {
                 isMousePressed = false;
-                j.hightRes();
-                j.threadFractal(pixels);
+                j->hightRes();
+                j->threadFractal(pixels);
             }
         }
 
@@ -101,7 +104,7 @@ int main()
         
 
 
-        texture.create(j.getWidth(), j.getHeight());
+        texture.create(j->getWidth(), j->getHeight());
 
 
         // Mettre à jour la texture avec les nouveaux pixels
@@ -113,8 +116,8 @@ int main()
         // Dessiner la texture sur la fenêtre
         sf::Sprite sprite(texture);
 
-        sprite.setScale(static_cast<float>(baseWidth) / j.getWidth(),
-                static_cast<float>(baseHeight) / j.getHeight());
+        sprite.setScale(static_cast<float>(baseWidth) / j->getWidth(),
+                static_cast<float>(baseHeight) / j->getHeight());
 
         window.draw(sprite);
 
@@ -149,9 +152,9 @@ int main()
             double number2 = std::strtod(newB, &endPtr2);
             float number3 = (float)std::strtod(newZOOM, &endPtr3);
             std::cout << "Number: " << number << " et Number B:" << number2<<std::endl;
-            j.setAB(number,number2);
-            j.setZoom(number3);
-            j.threadFractal(pixels);
+            j->setAB(number,number2);
+            j->setZoom(number3);
+            j->threadFractal(pixels);
             
             // Réinitialiser l'état du bouton
             buttonClicked = false;
@@ -163,6 +166,7 @@ int main()
     // Nettoyage final
     ImGui::SFML::Shutdown();
     delete[] pixels;
+    delete j;
 
     return 0;
 }
