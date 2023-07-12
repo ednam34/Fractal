@@ -27,8 +27,6 @@ void Mandel::generateFractal(sf::Uint8* pixels, int wStart, int wFinish, int hSt
         for (int j = wStart; j < wFinish; j++)
         {
             cx = 1.5 * (x - w / 2) / (0.5 * ZOOM * w) + move_x;
-            
-
         
             zx = 0;
             zy = 0;
