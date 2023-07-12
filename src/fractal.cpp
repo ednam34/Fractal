@@ -84,8 +84,8 @@ int Fractal::getHeight(){
 }
 
 void Fractal::lowRes(){
-    this->HEIGHT=baseHeight/4;
-    this->WIDTH=baseWidth/4;
+    this->HEIGHT=baseHeight/this->resDiv;
+    this->WIDTH=baseWidth/this->resDiv;
 }
 
 void Fractal::hightRes(){

@@ -33,6 +33,7 @@ class Fractal {
         int WIDTH = baseWidth;
         int HEIGHT = baseHeight; 
         double a,b;
+        int resDiv = 4;
         int iteration = 1000;
         float ZOOM = 0.8;
         double move_x = 0;

@@ -1,34 +1,45 @@
-#include "hpp/julia.hpp"
+#include "hpp/mandel.hpp"
 #include <cmath>
 
 
-julia::julia(double a, double b):Fractal(a,b){
-    
+Mandel::Mandel(double a, double b):Fractal(a,b){
+    this->resDiv=10;
 }
 
 
-void julia::generateFractal(sf::Uint8* pixels, int wStart, int wFinish, int hStart ,int hFinish)
+void Mandel::generateFractal(sf::Uint8* pixels, int wStart, int wFinish, int hStart ,int hFinish)
 {
     int x = wStart;
     int y = hStart;
     int w = WIDTH;
     int h = HEIGHT;
-    double zx,zy;
+
+    double zx = 0;
+    double zy = 0;
+    double x2 = 0;
+    double y2 = 0;
+    double cy,cx;
 
     for (int i = hStart; i < hFinish; i++)
     {
         x = wStart;
+        cy = (y - h / 2) / (0.5 * ZOOM * h) + move_y;
         for (int j = wStart; j < wFinish; j++)
         {
-            zx = 1.5 * (x - w / 2) / (0.5 * ZOOM * w) + move_x;
-            zy = (y - h / 2) / (0.5 * ZOOM * h) + move_y;
+            cx = 1.5 * (x - w / 2) / (0.5 * ZOOM * w) + move_x;
+            
+
+        
+            zx = 0;
+            zy = 0;
 
             int it = iteration;
 
             while (zx * zx + zy * zy < 4 && it > 0)
             {
-                double tmp = zx * zx - zy * zy + a;
-                zy = 2.0 * zx * zy + b;
+                
+                double tmp = zx * zx - zy * zy + cx;
+                zy = 2.0 * zx * zy + cy;
                 zx = tmp;
                 it--;
             }

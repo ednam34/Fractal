@@ -2,6 +2,7 @@
 #include <imgui-SFML.h>
 #include <imgui.h>
 #include "hpp/julia.hpp"
+#include "hpp/mandel.hpp"
 #include "hpp/fractal.hpp"
 #include <string>
 #include <cstring>
@@ -138,6 +139,11 @@ int main()
             // Le bouton a été cliqué, effectuez votre action ici
             convertToImg(pixels);
         }
+
+        static int fractalType = 0;
+        const char* fractalNames[] = { "Julia", "Mandelbrot" };
+        ImGui::Combo("Fractal type", &fractalType, fractalNames, IM_ARRAYSIZE(fractalNames));
+
         ImGui::End();
         
 
@@ -152,6 +158,16 @@ int main()
             double number2 = std::strtod(newB, &endPtr2);
             float number3 = (float)std::strtod(newZOOM, &endPtr3);
             std::cout << "Number: " << number << " et Number B:" << number2<<std::endl;
+
+            delete j;
+
+            if (fractalType == 0) {
+                j = new julia(number, number2);
+            } else if (fractalType == 1) {
+                j = new Mandel(number, number2);
+            }
+
+
             j->setAB(number,number2);
             j->setZoom(number3);
             j->threadFractal(pixels);

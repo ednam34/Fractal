@@ -24,6 +24,7 @@ add_executable(CMakeSFMLProject
 src/main.cpp
 src/julia.cpp
 src/fractal.cpp
+src/mandel.cpp
 )
 target_link_libraries(CMakeSFMLProject PRIVATE sfml-graphics ImGui-SFML::ImGui-SFML)
 target_compile_features(CMakeSFMLProject PRIVATE cxx_std_17)
