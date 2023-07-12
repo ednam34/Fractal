@@ -8,6 +8,24 @@
 
 
 
+
+void convertToImg(sf::Uint8* pixels){
+    sf::Image image;
+    image.create(baseWidth, baseHeight, pixels); // Crée une image avec les pixels donnés
+
+    // Enregistre l'image dans un fichier
+    if (image.saveToFile("image.png"))
+    {
+        std::cout << "Image enregistrée avec succès." << std::endl;
+    }
+    else
+    {
+        std::cout << "Erreur lors de l'enregistrement de l'image." << std::endl;
+    }
+}
+
+
+
 int main()
 {
     sf::RenderWindow window(sf::VideoMode(baseWidth, baseHeight), "CMake SFML Project");
@@ -106,10 +124,16 @@ int main()
         ImGui::InputText("A", newA,sizeof(newA));     
         ImGui::InputText("B", newB,sizeof(newB));    
         ImGui::InputText("ZOOM", newZOOM,sizeof(newB));   
-        if (ImGui::Button("Mon bouton"))
+        if (ImGui::Button("Générer"))
         {
             // Le bouton a été cliqué, effectuez votre action ici
             buttonClicked = true;
+        }
+
+        if (ImGui::Button("Sauvegarder"))
+        {
+            // Le bouton a été cliqué, effectuez votre action ici
+            convertToImg(pixels);
         }
         ImGui::End();
         
