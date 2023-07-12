@@ -34,13 +34,11 @@ void julia::generateFractal(sf::Uint8* pixels, int wStart, int wFinish, int hSta
 
             // Calculer la composante bleue en fonction du nombre d'itérations
             int blue = it % 256;  
-            blue = abs(blue-256);// Assurez-vous que la valeur reste dans la plage 0-255
+            //blue = // Assurez-vous que la valeur reste dans la plage 0-255
 
             int pixelIndex = (y * w + x) * 4;
-            pixels[pixelIndex] = blue;     // Rouge
-            pixels[pixelIndex + 1] = 0; // Vert
-            pixels[pixelIndex + 2] = 60; // Bleu
-            pixels[pixelIndex + 3] = 255; // Alpha (complètement opaque)
+
+            this->setColor(pixels, pixelIndex, blue);    
 
             x++;
         }
@@ -50,7 +48,14 @@ void julia::generateFractal(sf::Uint8* pixels, int wStart, int wFinish, int hSta
     //std::cout << "x = " << x << " y = " << y << std::endl;
 }
 
-void julia::threadFractal(sf::Uint8* pixels)
+void julia::setColor(sf::Uint8* &pixels , int i, int &color){
+    pixels[i] = abs(color-256);   // Rouge
+    pixels[i + 1] = 0; // Vert
+    pixels[i + 2] = abs(color-256);  // Bleu
+    pixels[i + 3] = 255; // Alpha (complètement opaque)
+}
+
+void julia::threadFractal(sf::Uint8* &pixels)
 {
     std::thread first(&julia::generateFractal, this, pixels, 0, WIDTH/2, 0, HEIGHT/2);
     std::thread second(&julia::generateFractal, this, pixels, WIDTH/2,WIDTH, 0, HEIGHT/2);
@@ -88,13 +93,13 @@ int julia::getHeight(){
 }
 
 void julia::lowRes(){
-    this->HEIGHT=720/4;
-    this->WIDTH=1080/4;
+    this->HEIGHT=baseHeight/4;
+    this->WIDTH=baseWidth/4;
 }
 
 void julia::hightRes(){
-    this->HEIGHT=720;
-    this->WIDTH=1080;
+    this->HEIGHT=baseHeight;
+    this->WIDTH=baseWidth;
 
     std::cout<<this->HEIGHT<<"x"<<this->WIDTH<<std::endl;
 }

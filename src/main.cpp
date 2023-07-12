@@ -10,7 +10,7 @@
 
 int main()
 {
-    sf::RenderWindow window(sf::VideoMode(1080, 720), "CMake SFML Project");
+    sf::RenderWindow window(sf::VideoMode(baseWidth, baseHeight), "CMake SFML Project");
     window.setFramerateLimit(60);
     char newA[10] = "-0.4";
     char newB[10] = "0.6";
@@ -34,6 +34,7 @@ int main()
 
     // Créer un tableau de pixels pour la texture
     sf::Uint8* pixels = new sf::Uint8[j.getWidth() * j.getHeight() * 4];
+
 
     //j.generateFractal(pixels);
     j.threadFractal(pixels);
@@ -63,9 +64,8 @@ int main()
 
                 // Effectuer le déplacement de la fractale en fonction du mouvement de la souris (delta)
                 // Mettez à jour les paramètres de votre fractale en conséquence
-                std::cout<<"delta:"<<static_cast<double>(delta.x)/200 << " "<<static_cast<double>(delta.y)/200<<std::endl;
 
-                j.setMv(static_cast<double>(delta.x)/300/j.getZoom(),static_cast<double>(delta.y)/300/j.getZoom());
+                j.setMv(static_cast<double>(delta.x)/400/j.getZoom(),static_cast<double>(delta.y)/400/j.getZoom());
                 j.threadFractal(pixels);
 
                 previousMousePos = currentMousePos;
@@ -95,21 +95,14 @@ int main()
         // Dessiner la texture sur la fenêtre
         sf::Sprite sprite(texture);
 
-        sf::Vector2u windowSize = window.getSize();
-
-        sprite.setScale(static_cast<float>(windowSize.x) / j.getWidth(),
-                static_cast<float>(windowSize.y) / j.getHeight());
+        sprite.setScale(static_cast<float>(baseWidth) / j.getWidth(),
+                static_cast<float>(baseHeight) / j.getHeight());
 
         window.draw(sprite);
 
         ImGui::SFML::Update(window, clock.restart());
 
-        std::string txt = std::to_string(j.getA());
-        std::string txt2 = std::to_string(j.getB());
-        std::string txt3 = txt + " " +txt2+"i";
-
         ImGui::Begin("Julia Fractal");
-        ImGui::Text(txt3.c_str());
         ImGui::InputText("A", newA,sizeof(newA));     
         ImGui::InputText("B", newB,sizeof(newB));    
         ImGui::InputText("ZOOM", newZOOM,sizeof(newB));   
@@ -119,6 +112,7 @@ int main()
             buttonClicked = true;
         }
         ImGui::End();
+        
 
         // Rendu de l'interface utilisateur ImGui
         ImGui::SFML::Render(window);
