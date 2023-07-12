@@ -123,7 +123,7 @@ int main()
 
             double number = std::strtod(newA, &endPtr);
             double number2 = std::strtod(newB, &endPtr2);
-            double number3 = std::strtod(newZOOM, &endPtr3);
+            float number3 = (float)std::strtod(newZOOM, &endPtr3);
             std::cout << "Number: " << number << " et Number B:" << number2<<std::endl;
             j.setAB(number,number2);
             j.setZoom(number3);

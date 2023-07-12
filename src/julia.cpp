@@ -2,7 +2,9 @@
 #include <cmath>
 
 
-julia::julia(double a, double b):a(a),b(b){
+julia::julia(double a, double b){
+    this->a=a;
+    this->b=b;
     std::cout<<"julia"<<std::endl;
 }
 
@@ -109,7 +111,7 @@ void julia::setZoom(double z){
     this->ZOOM=z;
 }
 
-double julia::getZoom(){
+float julia::getZoom(){
     return this->ZOOM;
 }
 

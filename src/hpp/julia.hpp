@@ -4,6 +4,7 @@
 #include <imgui-SFML.h>
 #include <imgui.h>
 #include <thread>
+#include "fractal.hpp"
 
 
 
@@ -11,7 +12,7 @@ const int baseWidth = 1080;
 const int baseHeight = 720;
 
 
-class julia{
+class julia : Fractal{
 
 
     public:
@@ -23,7 +24,7 @@ class julia{
         void setZoom(double z);
         double getA();
         double getB();
-        double getZoom();
+        float getZoom();
         int getWidth();
         int getHeight();
         void setColor(sf::Uint8* &pixels , int i, int &color);
@@ -36,7 +37,7 @@ class julia{
         int HEIGHT = baseHeight; 
         double a,b;
         int iteration = 1000;
-        double ZOOM = 0.8;
+        float ZOOM = 0.8;
         double move_x = 0;
         double move_y = 0;
         int sampleFactor = 2;
