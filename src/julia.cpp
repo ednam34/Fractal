@@ -2,16 +2,18 @@
 #include <cmath>
 
 
-julia::julia(double a, double b):Fractal(a,b){
+Julia::Julia(double a, double b):Fractal(a,b){
     
 }
 
 
-void julia::generateFractal(sf::Uint8* pixels, int wStart, int wFinish, int hStart ,int hFinish)
+void Julia::generateFractal(sf::Uint8* pixels, int wStart, int wFinish, int hStart ,int hFinish)
 {
     int w = WIDTH;
     int h = HEIGHT;
     double zx,zy;
+
+    float* cumulativeColors = new float[w * h]();
 
     for (int i = hStart; i < hFinish; i++)
     {
@@ -37,6 +39,8 @@ void julia::generateFractal(sf::Uint8* pixels, int wStart, int wFinish, int hSta
             int pixelIndex = (i * w + j) * 4;
 
             this->setColor(pixels, pixelIndex, blue);    
+
+            
 
         }
     }

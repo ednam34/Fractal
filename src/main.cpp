@@ -34,6 +34,7 @@ int main()
 {
     sf::RenderWindow window(sf::VideoMode(baseWidth, baseHeight), "CMake SFML Project");
     window.setFramerateLimit(60);
+    int actualType = 0;
     char newA[10] = "-0.4";
     char newB[10] = "0.6";
     char newZOOM[10] = "0.8";
@@ -43,8 +44,8 @@ int main()
     bool buttonClicked = false;
     sf::Vector2i previousMousePos;
     bool isMousePressed = false;
-    //julia j(-0.4,0.6);
-    Fractal* j = new Tricorn(-0.4, 0.6);
+    //Julia j(-0.4,0.6);
+    Fractal* j = new Julia(-0.4, 0.6);
     //j->hightRes();
     // Initialisation d'ImGui-SFML
 
@@ -160,27 +161,32 @@ int main()
             double number2 = std::strtod(newB, &endPtr2);
             float number3 = (float)std::strtod(newZOOM, &endPtr3);
             std::cout << "Number: " << number << " et Number B:" << number2<<std::endl;
+            
+            if(actualType!=fractalType){
+                delete j;
 
-            delete j;
-
-            switch (fractalType)
-            {
-            case 0:
-                j = new julia(number, number2);
-                break;
-            case 1:
-                j = new Mandel(number, number2);
-                break;
-            case 2:
-                j = new Tricorn(number, number2);
-                std::cout<<"heeeere\n";
-                break;
-            case 3:
-                j = new Burning(number, number2);
-                break;
-            default:
-                break;
+                switch (fractalType)
+                {
+                case 0:
+                    j = new Julia(number, number2);
+                    break;
+                case 1:
+                    j = new Mandel(number, number2);
+                    break;
+                case 2:
+                    j = new Tricorn(number, number2);
+                    std::cout<<"heeeere\n";
+                    break;
+                case 3:
+                    j = new Burning(number, number2);
+                    break;
+                default:
+                    break;
+                }
+                actualType=fractalType;
             }
+
+            
 
 
             j->setAB(number,number2);

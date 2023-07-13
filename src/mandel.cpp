@@ -3,6 +3,7 @@
 
 Mandel::Mandel(double a, double b) : Fractal(a, b) {
     this->resDiv = 10;
+    this->iteration=500;
 }
 
 void Mandel::generateFractal(sf::Uint8* pixels, int wStart, int wFinish, int hStart ,int hFinish) {
@@ -35,7 +36,7 @@ void Mandel::generateFractal(sf::Uint8* pixels, int wStart, int wFinish, int hSt
                 it--;
             }
 
-            int blue = it % 256;
+            int blue = it*2 % 256;
             int pixelIndex = (i * w + j) * 4;
 
             this->setColor(pixels, pixelIndex, blue);

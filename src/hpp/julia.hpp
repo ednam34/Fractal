@@ -10,11 +10,11 @@
 
 
 
-class julia :public Fractal{
+class Julia :public Fractal{
 
 
     public:
-        julia(double a, double b);
+        Julia(double a, double b);
         void generateFractal(sf::Uint8* pixels, int wStart, int wFinish, int hStart ,int hFinish) override;
 
 };
