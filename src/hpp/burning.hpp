@@ -8,11 +8,13 @@
 
 
 
-class Mandel :public Fractal{
+
+
+class Burning :public Fractal{
 
 
     public:
-        Mandel(double a, double b);
+        Burning(double a, double b);
         void generateFractal(sf::Uint8* pixels, int wStart, int wFinish, int hStart ,int hFinish) override;
 
 };

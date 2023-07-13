@@ -4,6 +4,8 @@
 #include "hpp/julia.hpp"
 #include "hpp/mandel.hpp"
 #include "hpp/fractal.hpp"
+#include "hpp/tricorn.hpp"
+#include "hpp/burning.hpp"
 #include <string>
 #include <cstring>
 #include <cstdlib>
@@ -42,7 +44,7 @@ int main()
     sf::Vector2i previousMousePos;
     bool isMousePressed = false;
     //julia j(-0.4,0.6);
-    Fractal* j = new julia(-0.4, 0.6);
+    Fractal* j = new Tricorn(-0.4, 0.6);
     //j->hightRes();
     // Initialisation d'ImGui-SFML
 
@@ -141,7 +143,7 @@ int main()
         }
 
         static int fractalType = 0;
-        const char* fractalNames[] = { "Julia", "Mandelbrot" };
+        const char* fractalNames[] = { "Julia", "Mandelbrot","Tricorn","Burning Ship" };
         ImGui::Combo("Fractal type", &fractalType, fractalNames, IM_ARRAYSIZE(fractalNames));
 
         ImGui::End();
@@ -161,10 +163,23 @@ int main()
 
             delete j;
 
-            if (fractalType == 0) {
+            switch (fractalType)
+            {
+            case 0:
                 j = new julia(number, number2);
-            } else if (fractalType == 1) {
+                break;
+            case 1:
                 j = new Mandel(number, number2);
+                break;
+            case 2:
+                j = new Tricorn(number, number2);
+                std::cout<<"heeeere\n";
+                break;
+            case 3:
+                j = new Burning(number, number2);
+                break;
+            default:
+                break;
             }
 
 

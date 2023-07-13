@@ -8,11 +8,13 @@
 
 
 
-class Mandel :public Fractal{
+
+
+class Tricorn :public Fractal{
 
 
     public:
-        Mandel(double a, double b);
+        Tricorn(double a, double b);
         void generateFractal(sf::Uint8* pixels, int wStart, int wFinish, int hStart ,int hFinish) override;
 
 };
