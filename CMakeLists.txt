@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.21)
-project(CMakeSFMLProject LANGUAGES CXX)
+project(FractalRk LANGUAGES CXX)
 
 include(FetchContent)
 
@@ -20,7 +20,7 @@ FetchContent_Declare(ImGui-SFML
     GIT_TAG master)
 FetchContent_MakeAvailable(ImGui-SFML)
 
-add_executable(CMakeSFMLProject 
+add_executable(FractalRk 
 src/main.cpp
 src/julia.cpp
 src/fractal.cpp
@@ -28,11 +28,11 @@ src/mandel.cpp
 src/tricorn.cpp
 src/burning.cpp
 )
-target_link_libraries(CMakeSFMLProject PRIVATE sfml-graphics ImGui-SFML::ImGui-SFML)
-target_compile_features(CMakeSFMLProject PRIVATE cxx_std_17)
+target_link_libraries(FractalRk PRIVATE sfml-graphics ImGui-SFML::ImGui-SFML)
+target_compile_features(FractalRk PRIVATE cxx_std_17)
 if (WIN32 AND BUILD_SHARED_LIBS)
-    add_custom_command(TARGET CMakeSFMLProject POST_BUILD
-        COMMAND ${CMAKE_COMMAND} -E copy $<TARGET_RUNTIME_DLLS:CMakeSFMLProject> $<TARGET_FILE_DIR:CMakeSFMLProject> COMMAND_EXPAND_LISTS)
+    add_custom_command(TARGET FractalRk POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy $<TARGET_RUNTIME_DLLS:FractalRk> $<TARGET_FILE_DIR:FractalRk> COMMAND_EXPAND_LISTS)
 endif()
 
-install(TARGETS CMakeSFMLProject)
+install(TARGETS FractalRk)
